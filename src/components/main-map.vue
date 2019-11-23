@@ -1,7 +1,7 @@
 <template>
   <div class='map-wrapper'>
     <div id="my-map" data-test="map-container"/>
-    <context-menu />
+    <context-menu :style='{"display": (isContextMenuVisible ? "block": "none"), "top": y, "left": x}' />
   </div>
 </template>
 
@@ -17,7 +17,9 @@ export default {
   },
   data () {
     return {
-      container: 'my-map'
+      isContextMenuVisible: false,
+      x: 0,
+      y: 0
     }
   },
   computed: {
@@ -25,12 +27,23 @@ export default {
   },
   mounted () {
     const mapWrapper = MapWrapper.create()
-    mapWrapper.init({
+    const mapbox = mapWrapper.init({
       container: 'my-map',
       ...this.map
     })
+    mapbox.on('contextmenu', this.handleContextMenu)
+    mapbox.on('click', this.handleClick)
+  },
+  methods: {
+    handleClick (event) {
+      this.isContextMenuVisible = false
+    },
+    handleContextMenu (event) {
+      this.isContextMenuVisible = true
+      this.x = `${event.originalEvent.pageX}px`
+      this.y = `${event.originalEvent.pageY}px`
+    }
   }
-
 }
 </script>
 
