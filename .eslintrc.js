@@ -26,6 +26,12 @@ module.exports = {
       env: {
         mocha: true
       }
+    },
+    {
+      files: '*.spec.js',
+      rules: {
+        'no-unused-expressions': 'off'
+      }
     }
   ]
 }

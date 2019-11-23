@@ -1,15 +1,17 @@
 <template>
-  <div id="my-map">
+  <div id="my-map" data-test="map-container">
   </div>
 </template>
 
 <script>
-import MapWrapper from '../lib/map-wrapper'
+import MapWrapper from '@/lib/map-wrapper'
 
 export default {
   name: 'MainMap',
-  props: {
-    msg: String
+  data () {
+    return {
+      container: 'my-map'
+    }
   },
   mounted () {
     const mapWrapper = MapWrapper.create()
