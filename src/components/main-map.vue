@@ -4,6 +4,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import MapWrapper from '@/lib/map-wrapper'
 
 export default {
@@ -13,13 +14,17 @@ export default {
       container: 'my-map'
     }
   },
+  computed: {
+    ...mapState(['map'])
+  },
   mounted () {
     const mapWrapper = MapWrapper.create()
     mapWrapper.init({
       container: 'my-map',
-      style: 'mapbox://styles/mapbox/streets-v9'
+      ...this.map
     })
   }
+
 }
 </script>
 
