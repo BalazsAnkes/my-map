@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl'
+import config from '@/lib/config'
 
 export default class MapWrapper {
   static create () {
@@ -15,7 +16,7 @@ export default class MapWrapper {
   }
 
   init (options) {
-    this._mapTool.accessToken = ''
+    this._mapTool.accessToken = config.mapbox.accessToken
     return new this._mapTool.Map(options)
   }
 }
