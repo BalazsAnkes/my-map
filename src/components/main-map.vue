@@ -1,14 +1,20 @@
 <template>
-  <div id="my-map" data-test="map-container">
+  <div class='map-wrapper'>
+    <div id="my-map" data-test="map-container"/>
+    <context-menu />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import MapWrapper from '@/lib/map-wrapper'
+import ContextMenu from '@/components/context-menu'
 
 export default {
   name: 'MainMap',
+  components: {
+    'context-menu': ContextMenu
+  },
   data () {
     return {
       container: 'my-map'
@@ -29,6 +35,7 @@ export default {
 </script>
 
 <style scoped>
+.map-wrapper,
 #my-map {
   height: 100%;
   width: 100%;
