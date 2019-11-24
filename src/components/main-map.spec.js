@@ -2,14 +2,17 @@ import { shallowMount } from '@vue/test-utils'
 import MainMap from './main-map.vue'
 import MapWrapper from '@/lib/map-wrapper'
 import MarkerWrapper from '@/lib/marker-wrapper'
+import MapboxClient from '@/client/mapbox-client'
 import createFakeStore from '../../tests/unit/helper'
 
 describe('MainMap.vue', () => {
   let mapWrapperStub = sinon.stub(MapWrapper, 'create')
   let markerWrapperStub = sinon.stub(MarkerWrapper, 'create')
+  let mapboxClientStub = sinon.stub(MapboxClient, 'create')
   let setLngLatStub
   let addToStub
   let removeStub
+  let getLngLatStub
   let store
   const stateObj = {
     mapOptions: {},
@@ -21,13 +24,18 @@ describe('MainMap.vue', () => {
     setLngLatStub = sinon.stub().returnsThis()
     addToStub = sinon.stub()
     removeStub = sinon.stub()
+    getLngLatStub = sinon.stub().returns({ toArray: sinon.stub() })
     mapWrapperStub.returns({
       initMap: sinon.stub().returns({ on: sinon.stub() })
     })
     markerWrapperStub.returns({
       setLngLat: setLngLatStub,
       addTo: addToStub,
-      remove: removeStub
+      remove: removeStub,
+      getLngLat: getLngLatStub
+    })
+    mapboxClientStub.returns({
+      getDirection: sinon.stub().returns({ then: sinon.stub() })
     })
     store = createFakeStore({ state })
     return shallowMount(MainMap, { store })

@@ -23,4 +23,8 @@ export default class MarkerWrapper {
   remove () {
     this._marker.remove()
   }
+
+  getLngLat () {
+    return this._marker.getLngLat()
+  }
 }

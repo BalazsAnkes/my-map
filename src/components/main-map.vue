@@ -5,6 +5,10 @@
       @marked="handleMarked"
       :style='{"display": (isContextMenuVisible ? "block": "none"), "top": y, "left": x}'
     />
+    <travel-guide
+      :travelData="travelData"
+      :style='{"display": (isTravelGuideVisible ? "block": "none")}'
+    />
   </div>
 </template>
 
@@ -13,15 +17,20 @@ import { mapState, mapMutations } from 'vuex'
 import MapWrapper from '@/lib/map-wrapper'
 import MarkerWrapper from '@/lib/marker-wrapper'
 import ContextMenu from '@/components/context-menu'
+import TravelGuide from '@/components/travel-guide'
+import MapboxClient from '@/client/mapbox-client'
 
 export default {
   name: 'MainMap',
   components: {
-    'context-menu': ContextMenu
+    'context-menu': ContextMenu,
+    'travel-guide': TravelGuide
   },
   data () {
     return {
       isContextMenuVisible: false,
+      isTravelGuideVisible: false,
+      travelData: {},
       mapbox: null,
       mapEvent: null,
       x: 0,
@@ -58,6 +67,37 @@ export default {
       this.toMarker.remove()
       this.setToMarker(MarkerWrapper.create())
       this.toMarker.setLngLat(this.mapEvent.lngLat).addTo(this.mapbox)
+
+      const client = MapboxClient.create()
+      const lngLatArray = [this.fromMarker.getLngLat().toArray(), this.toMarker.getLngLat().toArray()]
+      client.getDirection({ lngLatArray }).then((response) => {
+        this._paintDirection(response.data.routes[0].geometry)
+        this.travelData = response.data.routes[0]
+        this.isTravelGuideVisible = true
+      })
+    },
+    _paintDirection (geometry) {
+      this.mapbox.addLayer({
+        'id': 'route',
+        'type': 'line',
+        'source': {
+          'type': 'geojson',
+          'data': {
+            'type': 'Feature',
+            'properties': {},
+            'geometry': geometry
+          }
+        },
+        'layout': {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        'paint': {
+          'line-color': '#3b9ddd',
+          'line-width': 8,
+          'line-opacity': 0.8
+        }
+      })
     },
     ...mapMutations(['setFromMarker', 'setToMarker'])
   }

@@ -47,4 +47,17 @@ describe('MarkerWrapper', () => {
       expect(fakeMarker.remove).to.have.been.called
     })
   })
+
+  describe('getLngLat', () => {
+    it('should get the longitude and latitude of the marker', () => {
+      const fakeMarker = {
+        getLngLat: sinon.stub()
+      }
+      const markerWrapper = new MarkerWrapper(fakeMarker)
+
+      markerWrapper.getLngLat()
+
+      expect(fakeMarker.getLngLat).to.have.been.called
+    })
+  })
 })
