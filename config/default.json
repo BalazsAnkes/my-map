@@ -1,10 +1,13 @@
 {
   "mapbox": {
-    "accessToken": ""
+    "accessToken": "",
+    "apiURL": "https://api.mapbox.com/",
+    "directionsEndpoint": "directions",
+    "apiVersion": "v5"
   },
   "map": {
-    "style": "mapbox://styles/mapbox/streets-v9",
+    "style": "mapbox://styles/mapbox/streets-v11",
     "center": [17.909769, 47.092445],
-    "zoom": 12
+    "zoom": 13
   }
 }
