@@ -1,4 +1,9 @@
 # my-map
+You will need an [access token](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/) from Mapbox
+
+How to get direction?
+1. Mark the start point by clicking on the map
+2. Mark the end point by right click in the map and click `Route to`
 
 ## Project setup
 ```
@@ -20,7 +25,7 @@ npm run build
 npm run test:unit
 ```
 
-### Run your end-to-end tests
+### Run your end-to-end tests (work in progress)
 ```
 npm run test:e2e
 ```
