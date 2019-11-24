@@ -6,7 +6,13 @@ describe('ContextMenu.vue', () => {
     const wrapper = shallowMount(ContextMenu, {})
 
     expect(wrapper.find('[data-test=context-menu]').exists()).to.eql(true)
-    expect(wrapper.findAll('li').at(0).text()).to.eql('From')
-    expect(wrapper.findAll('li').at(1).text()).to.eql('To')
+    expect(wrapper.find('[data-test=route-to]').text()).to.eql('Route to')
+  })
+
+  it('emits an event on click', () => {
+    const wrapper = shallowMount(ContextMenu, {})
+    wrapper.find('[data-test=route-to]').trigger('click')
+
+    expect(wrapper.emitted()).to.have.property('marked')
   })
 })

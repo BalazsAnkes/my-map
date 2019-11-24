@@ -89,6 +89,25 @@ describe('MainMap.vue', () => {
       expect(wrapper.vm.isContextMenuVisible).to.be.true
       expect(wrapper.vm.x).to.eql('1px')
       expect(wrapper.vm.y).to.eql('2px')
+      expect(wrapper.vm.mapEvent).to.eql(fakeEvent)
+    })
+  })
+
+  describe('handleMarked', () => {
+    it('places a to marker to the map', () => {
+      const wrapper = init()
+      const fakeEvent = {
+        lngLat: {
+          lng: 1,
+          lat: 2
+        }
+      }
+      wrapper.vm.mapEvent = fakeEvent
+
+      wrapper.vm.handleMarked()
+      expect(wrapper.vm.isContextMenuVisible).to.be.false
+      expect(setLngLatStub).to.have.been.called
+      expect(addToStub).to.have.been.called
     })
   })
 })

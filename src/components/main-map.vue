@@ -1,7 +1,10 @@
 <template>
   <div class='map-wrapper'>
     <div id="my-map" data-test="map-container"/>
-    <context-menu :style='{"display": (isContextMenuVisible ? "block": "none"), "top": y, "left": x}' />
+    <context-menu
+      @marked="handleMarked"
+      :style='{"display": (isContextMenuVisible ? "block": "none"), "top": y, "left": x}'
+    />
   </div>
 </template>
 
@@ -20,12 +23,13 @@ export default {
     return {
       isContextMenuVisible: false,
       mapbox: null,
+      mapEvent: null,
       x: 0,
       y: 0
     }
   },
   computed: {
-    ...mapState(['mapOptions', 'fromMarker'])
+    ...mapState(['mapOptions', 'fromMarker', 'toMarker'])
   },
   mounted () {
     const mapWrapper = MapWrapper.create()
@@ -40,18 +44,22 @@ export default {
     handleClick (event) {
       this.isContextMenuVisible = false
       this.fromMarker.remove()
-      this._addMarker(event)
-    },
-    handleContextMenu (event) {
-      this.isContextMenuVisible = true
-      this.x = `${event.originalEvent.pageX}px`
-      this.y = `${event.originalEvent.pageY}px`
-    },
-    _addMarker (event) {
       this.setFromMarker(MarkerWrapper.create())
       this.fromMarker.setLngLat(event.lngLat).addTo(this.mapbox)
     },
-    ...mapMutations(['setFromMarker'])
+    handleContextMenu (event) {
+      this.isContextMenuVisible = true
+      this.mapEvent = event
+      this.x = `${event.originalEvent.pageX}px`
+      this.y = `${event.originalEvent.pageY}px`
+    },
+    handleMarked () {
+      this.isContextMenuVisible = false
+      this.toMarker.remove()
+      this.setToMarker(MarkerWrapper.create())
+      this.toMarker.setLngLat(this.mapEvent.lngLat).addTo(this.mapbox)
+    },
+    ...mapMutations(['setFromMarker', 'setToMarker'])
   }
 }
 </script>

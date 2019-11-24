@@ -1,15 +1,19 @@
 <template>
   <div class='context-menu' data-test="context-menu">
     <ul>
-      <li class="menu-item"><a>From</a></li>
-      <li class="menu-item"><a>To</a></li>
+      <li class="menu-item" data-test="route-to" @click='emitMarked'>Route to</li>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ContextMenu'
+  name: 'ContextMenu',
+  methods: {
+    emitMarked () {
+      this.$emit('marked')
+    }
+  }
 }
 </script>
 
@@ -29,6 +33,7 @@ export default {
 }
 
 .menu-item {
+  border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
   padding: 10px;
@@ -36,15 +41,7 @@ export default {
 }
 
 .menu-item:hover {
-  background: #fafafa;
-}
-
-li:first-of-type {
-  border-radius: 4px 4px 0 0;
-}
-
-li:last-of-type {
-  border-radius: 0 0 4px 4px;
+  background: #3FB1CE;
 }
 
 ul {
