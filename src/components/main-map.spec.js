@@ -9,19 +9,27 @@ describe('MainMap.vue', () => {
   let markerWrapperStub = sinon.stub(MarkerWrapper, 'create')
   let setLngLatStub
   let addToStub
+  let removeStub
   let store
+  const stateObj = {
+    mapOptions: {},
+    fromMarker: { remove () {} },
+    toMarker: { remove () {} }
+  }
 
-  const init = () => {
+  const init = (state = stateObj) => {
     setLngLatStub = sinon.stub().returnsThis()
     addToStub = sinon.stub()
+    removeStub = sinon.stub()
     mapWrapperStub.returns({
       initMap: sinon.stub().returns({ on: sinon.stub() })
     })
     markerWrapperStub.returns({
       setLngLat: setLngLatStub,
-      addTo: addToStub
+      addTo: addToStub,
+      remove: removeStub
     })
-    store = createFakeStore({ state: { map: {} } })
+    store = createFakeStore({ state })
     return shallowMount(MainMap, { store })
   }
 
@@ -46,6 +54,24 @@ describe('MainMap.vue', () => {
       expect(wrapper.vm.isContextMenuVisible).to.be.false
       expect(setLngLatStub).to.have.been.called
       expect(addToStub).to.have.been.called
+    })
+
+    it('removes the previous marker', () => {
+      const removeStub = sinon.stub()
+      const state = {
+        mapOptions: {},
+        fromMarker: { remove: removeStub }
+      }
+      const wrapper = init(state)
+      const fakeEvent = {
+        lngLat: {
+          lng: 12,
+          lat: 23
+        }
+      }
+
+      wrapper.vm.handleClick(fakeEvent)
+      expect(removeStub).to.have.been.called
     })
   })
 

@@ -34,4 +34,17 @@ describe('MarkerWrapper', () => {
       expect(fakeMarker.addTo).to.have.been.calledWith(fakeMap)
     })
   })
+
+  describe('remove', () => {
+    it('should remove the marker from map', () => {
+      const fakeMarker = {
+        remove: sinon.stub()
+      }
+      const markerWrapper = new MarkerWrapper(fakeMarker)
+
+      markerWrapper.remove()
+
+      expect(fakeMarker.remove).to.have.been.called
+    })
+  })
 })

@@ -19,4 +19,8 @@ export default class MarkerWrapper {
     this._marker.addTo(map)
     return this
   }
+
+  remove () {
+    this._marker.remove()
+  }
 }

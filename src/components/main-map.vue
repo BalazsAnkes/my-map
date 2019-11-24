@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import MapWrapper from '@/lib/map-wrapper'
 import MarkerWrapper from '@/lib/marker-wrapper'
 import ContextMenu from '@/components/context-menu'
@@ -25,7 +25,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['mapOptions'])
+    ...mapState(['mapOptions', 'fromMarker'])
   },
   mounted () {
     const mapWrapper = MapWrapper.create()
@@ -39,14 +39,19 @@ export default {
   methods: {
     handleClick (event) {
       this.isContextMenuVisible = false
-      const marker = MarkerWrapper.create()
-      marker.setLngLat(event.lngLat).addTo(this.mapbox)
+      this.fromMarker.remove()
+      this._addMarker(event)
     },
     handleContextMenu (event) {
       this.isContextMenuVisible = true
       this.x = `${event.originalEvent.pageX}px`
       this.y = `${event.originalEvent.pageY}px`
-    }
+    },
+    _addMarker (event) {
+      this.setFromMarker(MarkerWrapper.create())
+      this.fromMarker.setLngLat(event.lngLat).addTo(this.mapbox)
+    },
+    ...mapMutations(['setFromMarker'])
   }
 }
 </script>

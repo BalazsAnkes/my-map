@@ -1,7 +1,11 @@
 import config from '@/lib/config'
 
+const markerInterface = {
+  remove () {}
+}
+
 export default {
   mapOptions: config.map,
-  fromMarker: {},
-  toMarker: {}
+  fromMarker: markerInterface,
+  toMarker: markerInterface
 }
