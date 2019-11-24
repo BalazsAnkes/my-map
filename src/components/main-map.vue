@@ -23,13 +23,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(['map'])
+    ...mapState(['mapOptions'])
   },
   mounted () {
     const mapWrapper = MapWrapper.create()
     const mapbox = mapWrapper.init({
       container: 'my-map',
-      ...this.map
+      ...this.mapOptions
     })
     mapbox.on('contextmenu', this.handleContextMenu)
     mapbox.on('click', this.handleClick)

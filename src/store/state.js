@@ -1,6 +1,6 @@
 import config from '@/lib/config'
 
 export default {
-  map: config.map,
+  mapOptions: config.map,
   markers: []
 }
