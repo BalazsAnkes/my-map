@@ -24,7 +24,6 @@ export default {
   -webkit-box-shadow: 10px 10px 24px 0px rgba(0,0,0,0.6);
   -moz-box-shadow: 10px 10px 24px 0px rgba(0,0,0,0.6);
   box-shadow: 10px 10px 24px 0px rgba(0,0,0,0.6);
-  font-family: Arial;
   left: 0;
   position: absolute;
   top: 0;
