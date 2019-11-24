@@ -8,6 +8,7 @@
 <script>
 import { mapState } from 'vuex'
 import MapWrapper from '@/lib/map-wrapper'
+import MarkerWrapper from '@/lib/marker-wrapper'
 import ContextMenu from '@/components/context-menu'
 
 export default {
@@ -38,6 +39,8 @@ export default {
   methods: {
     handleClick (event) {
       this.isContextMenuVisible = false
+      const marker = MarkerWrapper.create()
+      marker.setLngLat(event.lngLat).addTo(this.mapbox)
     },
     handleContextMenu (event) {
       this.isContextMenuVisible = true
