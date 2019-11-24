@@ -20,7 +20,7 @@ describe('MapWrapper', () => {
     expect(instance).to.eql(instance2)
   })
 
-  describe('init', () => {
+  describe('initMap', () => {
     class FakeMap {
       constructor (options) {
         this._options = options
@@ -40,7 +40,7 @@ describe('MapWrapper', () => {
     it('initializes the map', () => {
       const options = {}
       const mapWrapper = new MapWrapper(mapToolMock)
-      const initObject = mapWrapper.init(options)
+      const initObject = mapWrapper.initMap(options)
 
       expect(mapToolMock).to.have.property('accessToken')
       expect(initObject).to.be.instanceof(FakeMap)

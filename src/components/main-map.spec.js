@@ -9,7 +9,7 @@ describe('MainMap.vue', () => {
 
   const init = () => {
     mapWrapperStub.returns({
-      init: sinon.stub().returns({ on: sinon.stub() })
+      initMap: sinon.stub().returns({ on: sinon.stub() })
     })
     store = createFakeStore({ state: { map: {} } })
     return shallowMount(MainMap, { store })

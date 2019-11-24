@@ -15,7 +15,7 @@ export default class MapWrapper {
     return MapWrapper._instance
   }
 
-  init (options) {
+  initMap (options) {
     this._mapTool.accessToken = config.mapbox.accessToken
     return new this._mapTool.Map(options)
   }

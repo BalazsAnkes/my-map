@@ -18,6 +18,7 @@ export default {
   data () {
     return {
       isContextMenuVisible: false,
+      mapbox: null,
       x: 0,
       y: 0
     }
@@ -27,12 +28,12 @@ export default {
   },
   mounted () {
     const mapWrapper = MapWrapper.create()
-    const mapbox = mapWrapper.init({
+    this.mapbox = mapWrapper.initMap({
       container: 'my-map',
       ...this.mapOptions
     })
-    mapbox.on('contextmenu', this.handleContextMenu)
-    mapbox.on('click', this.handleClick)
+    this.mapbox.on('contextmenu', this.handleContextMenu)
+    this.mapbox.on('click', this.handleClick)
   },
   methods: {
     handleClick (event) {
